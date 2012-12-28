@@ -22,20 +22,24 @@ ActiveRecord::Schema.define(:version => 20121228183241) do
   create_table "projects", :force => true do |t|
     t.integer  "namespace",   :null => false
     t.string   "name",        :null => false
+    t.string   "host",        :null => false
     t.string   "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
   create_table "reports", :force => true do |t|
-    t.integer  "project_id", :null => false
-    t.integer  "code"
-    t.integer  "delay"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "project_id",                   :null => false
+    t.integer  "code",          :default => 0, :null => false
+    t.integer  "delay",         :default => 0, :null => false
+    t.integer  "response_time", :default => 0, :null => false
+    t.string   "message",                      :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
-  add_index "reports", ["project_id", "created_at"], :name => "index_reports_on_project_id_and_created_at"
+  add_index "reports", ["created_at"], :name => "index_reports_on_created_at"
+  add_index "reports", ["project_id", "code"], :name => "index_reports_on_project_id_and_code"
   add_index "reports", ["project_id"], :name => "index_reports_on_project_id"
 
 end
