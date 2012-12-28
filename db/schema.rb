@@ -15,17 +15,18 @@ ActiveRecord::Schema.define(:version => 20121228183241) do
 
   create_table "namespaces", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "projects", :force => true do |t|
-    t.integer  "namespace",   :null => false
-    t.string   "name",        :null => false
-    t.string   "host",        :null => false
     t.string   "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "projects", :force => true do |t|
+    t.integer  "namespace_id", :null => false
+    t.string   "name",         :null => false
+    t.string   "host",         :null => false
+    t.string   "description"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "reports", :force => true do |t|

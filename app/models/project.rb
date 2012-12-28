@@ -2,6 +2,11 @@ class Project < ActiveRecord::Base
   belongs_to :namespace
   has_many :reports, :dependent => :destroy
 
+  validate :name, :host, :namespace_id, :presence => true
+  validate :name, :host, :unique => true
+
+  attr_accessible :name, :host, :description
+
   def ping#(host)
     require 'net/http'
     require 'uri'
