@@ -1,4 +1,4 @@
-%ul.nav.nav-tabs
+%ul.nav.nav-tabs.namespaces
   - Namespace.all.each do |namespace|
     %li{:class => (namespace.id == active.id and "active")}
       = link_to namespace.name.humanize, namespace_path(namespace)

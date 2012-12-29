@@ -1,4 +1,4 @@
-%ul.nav.nav-pills
+%ul.nav.nav-pills.projects
   - namespace.projects.each do |project|
     %li{:class => (project.id == active.id and "active")}
       = link_to project.name.humanize, namespace_project_path(project.namespace, project)

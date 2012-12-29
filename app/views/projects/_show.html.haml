@@ -4,14 +4,10 @@
 .well.white
   You can filter reports time period by tabs bellow
 
-  %ul.nav.nav-tabs
+  %ul.nav.nav-tabs.periods
     - Project::PERIODS.each do |period|
       %li{:class => (period == 'day' and 'active')}
         = link_to period.humanize, namespace_project_reports_path(@namespace, @project, :period => period)
-
-  Project downs for last day
-  %br
-  %br
 
   #reports_container
     = render :partial => 'reports/index'
