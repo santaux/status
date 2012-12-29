@@ -46,11 +46,11 @@ if Rails.env.development?
   Project.all.each do |project|
     # Add test data for each project for past 'past_days' days:
     (60*24*past_days).times { |i|
-      delay = (1..5).to_a.sample.to_f/10
+      delay_time = (1..5).to_a.sample.to_f/10
       response_time = (6..10).to_a.sample.to_f/10
       report = project.reports.create(
         code: 200,
-        delay: delay,
+        delay_time: delay_time,
         response_time: response_time,
         message: "OK"
       )
@@ -63,17 +63,17 @@ if Rails.env.development?
     amount = (project.reports.count.to_f/100)*(1..5).to_a.sample
     #project.reports.order("RANDOM()").limit(amount).find_in_batches(batch_size: 100) do |group|
     project.reports.order("RANDOM()").limit(amount).each do |report|
-      report.update_attributes(code: 500, delay: 0.123, response_time: 0.156, message: 'Internal Server Error')
+      report.update_attributes(code: 500, delay_time: 0.123, response_time: 0.156, message: 'Internal Server Error')
     end
 
     # Set Timeout::Error for some reports:
     amount = (project.reports.count.to_f/100)*(1..5).to_a.sample
     #project.reports.order("RANDOM()").limit(amount).find_in_batches(batch_size: 100) do |group|
     project.reports.order("RANDOM()").limit(amount).each do |report|
-      report.update_attributes(code: 0, delay: 0, response_time: 0, message: 'Timeout::Error')
+      report.update_attributes(code: 0, delay_time: 0, response_time: 0, message: 'Timeout::Error')
     end
   end
 
   # It doesn't give any profit:
-  #Benchmark.bm { |b| b.report("with") { Thread.new { 50.times { Project.first.reports.create(code: 200, delay: 1, response_time: 1, message: "OK") } }.join; Thread.new { 50.times { Project.first.reports.create(code: 200, delay: 1, response_time: 1, message: "OK") } }.join } }
+  #Benchmark.bm { |b| b.report("with") { Thread.new { 50.times { Project.first.reports.create(code: 200, delay_time: 1, response_time: 1, message: "OK") } }.join; Thread.new { 50.times { Project.first.reports.create(code: 200, delay_time: 1, response_time: 1, message: "OK") } }.join } }
 end

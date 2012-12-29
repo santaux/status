@@ -1,0 +1,11 @@
+.failed_box
+  %table.table.table-bordered
+    %th
+      Code
+    %th
+      Message
+    - @reports.failed.each do |report|
+      %tr{:class => ((report.code == 500 and "warning") or (report.code == 0 and "error"))}
+        %td= report.code
+        %td= report.message
+
