@@ -24,7 +24,7 @@ Project downs for last #{params[:period]}
 
 :javascript
   $(function () {
-    var d = #{ @project.reports_grouped_uptime.to_s } ;
+    var d = #{ @project.reports_grouped_uptime(params[:period] || "day") } ;
 
     $.plot($("#uptime"), [d], {
       xaxis: {
@@ -39,7 +39,7 @@ Project downs for last #{params[:period]}
 
 :javascript
   $(function () {
-    var d = #{ @project.reports_grouped_delay_time } ;
+    var d = #{ @project.reports_grouped_delay_time(params[:period] || "day") } ;
 
     $.plot($("#delay_time"), [d], {
       xaxis: {
@@ -50,7 +50,7 @@ Project downs for last #{params[:period]}
 
 :javascript
   $(function () {
-    var d = #{ @project.reports_grouped_response_time } ;
+    var d = #{ @project.reports_grouped_response_time(params[:period] || "day") } ;
 
     $.plot($("#response_time"), [d], {
       xaxis: {
