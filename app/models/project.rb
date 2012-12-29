@@ -56,12 +56,31 @@ class Project < ActiveRecord::Base
   end
 
   def reports_grouped_response_time(period="day")
-    #gr = reports.order("created_at DESC").map{ |r| [r.response_time, r.created_at] }.group_by { |r| r[1].hour }
-    reports.by_period(period).order("created_at DESC").map { |report| [report.created_at.to_i*1000,report.response_time.to_f]}.to_s
+    #reports.by_period(period).order("created_at DESC").map { |report| [report.created_at.to_i*1000,report.response_time.to_f]}.to_s
+    gr = reports.by_period(period).order("created_at DESC").map{ |r| [r.response_time, r.created_at] }.group_by { |r| r[1].hour }
+    gr.values.map { |v|
+      average = v.map { |r| r[0] }.inject(0.0) { |sum, el| sum + el } / v.size
+      [
+        # get first time value to build graphs by time:
+        v[0][1].to_i*1000,
+        # get average delay time value:
+        average
+      ]
+    }.sort
   end
 
   def reports_grouped_delay_time(period="day")
-    reports.by_period(period).order("created_at DESC").map { |report| [report.created_at.to_i*1000,report.delay_time.to_f]}.to_s
+    #reports.by_period(period).order("created_at DESC").map { |report| [report.created_at.to_i*1000,report.delay_time.to_f]}.to_s
+    gr = reports.by_period(period).order("created_at DESC").map{ |r| [r.delay_time, r.created_at] }.group_by { |r| r[1].hour }
+    gr.values.map { |v|
+      average = v.map { |r| r[0] }.inject(0.0) { |sum, el| sum + el } / v.size
+      [
+        # get first time value to build graphs by time:
+        v[0][1].to_i*1000,
+        # get average delay time value:
+        average
+      ]
+    }.sort
   end
 
   def reports_grouped_uptime(period="day")
