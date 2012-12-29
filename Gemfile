@@ -3,6 +3,10 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.9'
 gem 'clockwork'
 gem 'sidekiq'
+gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem "haml-rails"
+gem 'therubyracer'
+gem "less-rails"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

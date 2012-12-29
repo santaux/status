@@ -1,0 +1,10 @@
+= render :partial => 'shared/top_bar', :locals => {:active => Namespace.first}
+
+.lead
+  = Namespace.first.description
+
+= render :partial => 'shared/middle_bar', :locals => {:active => Namespace.first.projects.first}
+
+.lead
+  = Namespace.first.projects.first.description
+

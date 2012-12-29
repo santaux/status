@@ -1,0 +1,5 @@
+%ul.nav.nav-pills
+  - Namespace.first.projects.each do |project|
+    %li{:class => (project.id == active.id and "active")}
+      = link_to project.name.humanize, '#'
+
