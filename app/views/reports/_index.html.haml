@@ -1,15 +1,86 @@
 Project downs for last #{params[:period]}
+
+%br
+%br
+
+.row
+  .span2
+    %h4 Uptime
+    %h2 #{@project.uptime.to_s[0..5]}%
+  .span5
+    #uptime
+.row
+  .span2
+    %h4 Delay Time
+    %h2 #{@project.average_delay_time.to_s[0..5]}ms
+  .span5
+    #delay_time
+.row
+  .span2
+    %h4 Response Time
+    %h2 #{@project.average_response_time.to_s[0..5]}ms
+  .span5
+    #response_time
+
+:javascript
+  $(function () {
+    var d = #{ @project.reports_grouped_uptime.to_s } ;
+
+    $.plot($("#uptime"), [d], {
+      xaxis: {
+        mode: "time", tickSize: [2, 'hour'] 
+      },
+      yaxis: {
+        max: 100
+      }
+    });
+  });
+
+
+:javascript
+  $(function () {
+    var d = #{ @project.reports_grouped_delay_time } ;
+
+    $.plot($("#delay_time"), [d], {
+      xaxis: {
+        mode: "time", timezone: "browser"
+      },
+      yaxis: {
+        max: 1
+      }
+    });
+  });
+
+:javascript
+  $(function () {
+    var d = #{ @project.reports_grouped_response_time } ;
+
+    $.plot($("#response_time"), [d], {
+      xaxis: {
+        mode: "time", timezone: "browser"
+      },
+      yaxis: {
+        max: 1
+      }
+    });
+  });
+
+
 %br
 %br
 
 .failed_box
+  %h3 Last Failed Checks
   %table.table.table-bordered
+    %th
+      Time
     %th
       Code
     %th
       Message
     - @reports.failed.each do |report|
-      %tr{:class => ((report.code == 500 and "warning") or (report.code == 0 and "error"))}
-        %td= report.code
+      %tr{:class => ((report.code == 500 and "warning") or (report.code == 0 and "error") or "info")}
+        %td= report.created_at
+        %td= report.filtered_code
         %td= report.message
 

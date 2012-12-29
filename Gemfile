@@ -7,6 +7,7 @@ gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootst
 gem "haml-rails"
 gem 'therubyracer'
 gem "less-rails"
+gem "rspec-rails"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

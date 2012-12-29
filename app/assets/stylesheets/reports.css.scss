@@ -3,10 +3,30 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .failed_box {
-  width: 500px;
+  width: 860px;
   height: 500px;
   overflow: overlay;
+
+  td {
+    width: 30%
+  }
 }
+
 .well.white {
   background-color: white;
+}
+
+#uptime {
+  width: 670px;
+  height: 200px
+}
+
+#delay_time {
+  width: 670px;
+  height: 200px
+}
+
+#response_time {
+  width: 670px;
+  height: 200px
 }

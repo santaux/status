@@ -44,10 +44,12 @@ if Rails.env.development?
 
   past_days = 1
   Project.all.each do |project|
+    delay_rand_base = rand(2..5)
+    response_rand_base = rand(4..8)
     # Add test data for each project for past 'past_days' days:
     (60*24*past_days).times { |i|
-      delay_time = (1..5).to_a.sample.to_f/10
-      response_time = (6..10).to_a.sample.to_f/10
+      delay_time = (delay_rand_base - rand(1..5).to_f/10)/10
+      response_time = (response_rand_base - rand(5..10).to_f/10)/10
       report = project.reports.create(
         code: 200,
         delay_time: delay_time,
@@ -60,15 +62,13 @@ if Rails.env.development?
     } if project.reports.count < (60*24*past_days)
 
     # Set 500 code for some reports:
-    amount = (project.reports.count.to_f/100)*(1..5).to_a.sample
-    #project.reports.order("RANDOM()").limit(amount).find_in_batches(batch_size: 100) do |group|
+    amount = (project.reports.count.to_f/100)*(rand(1..5).to_f/10)
     project.reports.order("RANDOM()").limit(amount).each do |report|
       report.update_attributes(code: 500, delay_time: 0.123, response_time: 0.156, message: 'Internal Server Error')
     end
 
     # Set Timeout::Error for some reports:
-    amount = (project.reports.count.to_f/100)*(1..5).to_a.sample
-    #project.reports.order("RANDOM()").limit(amount).find_in_batches(batch_size: 100) do |group|
+    amount = (project.reports.count.to_f/100)*(rand(1..3).to_f/10)
     project.reports.order("RANDOM()").limit(amount).each do |report|
       report.update_attributes(code: 0, delay_time: 0, response_time: 0, message: 'Timeout::Error')
     end
