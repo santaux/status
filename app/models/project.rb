@@ -43,12 +43,12 @@ class Project < ActiveRecord::Base
     calc_uptime(reports.by_period(period).count, reports.by_period(period).failed.count)
   end
 
-  def average_delay_time
-    reports.average(:delay_time)
+  def average_delay_time(period="day")
+    reports.by_period(period).average(:delay_time)
   end
 
-  def average_response_time
-    reports.average(:response_time)
+  def average_response_time(period="day")
+    reports.by_period(period).average(:response_time)
   end
 
   def reports_grouped_response_time(period="day")
