@@ -23,7 +23,7 @@ class Project < ActiveRecord::Base
       start_time = Time.now
 
       Net::HTTP.start(URI(host).host) { |http|
-        http.read_timeout = 1
+        http.read_timeout = 10
         delay = Time.now - start_time
         response = http.request_get('/')
         response_time = Time.now - start_time

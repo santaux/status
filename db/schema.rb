@@ -30,13 +30,13 @@ ActiveRecord::Schema.define(:version => 20121228183241) do
   end
 
   create_table "reports", :force => true do |t|
-    t.integer  "project_id",                   :null => false
-    t.integer  "code",          :default => 0, :null => false
-    t.integer  "delay",         :default => 0, :null => false
-    t.integer  "response_time", :default => 0, :null => false
-    t.string   "message",                      :null => false
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.integer  "project_id",                                                   :null => false
+    t.integer  "code",                                        :default => 0,   :null => false
+    t.decimal  "delay",         :precision => 6, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "response_time", :precision => 6, :scale => 2, :default => 0.0, :null => false
+    t.string   "message",                                                      :null => false
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
   end
 
   add_index "reports", ["created_at"], :name => "index_reports_on_created_at"

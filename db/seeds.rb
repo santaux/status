@@ -33,7 +33,7 @@ if Rails.env.development?
   google = Namespace.find_by_name("google")
   google.projects.find_or_create_by_name( name: "Google Search", host: "http://www.google.com/", description: "Main Google page")
   google.projects.find_or_create_by_name( name: "Google Maps", host: "http://maps.google.com/", description: "Google Maps service")
-  google.projects.find_or_create_by_name( name: "Youtube", host: "http://youtube.com/", description: "Google video service")
+  google.projects.find_or_create_by_name( name: "Youtube", host: "http://www.youtube.com/", description: "Google video service")
 
   github = Namespace.find_by_name("github")
   github.projects.find_or_create_by_name( name: "Github Main", host: "http://github.com/", description: "Github Social Coding")
@@ -41,4 +41,39 @@ if Rails.env.development?
 
   pinterest = Namespace.find_by_name("pinterest")
   pinterest.projects.find_or_create_by_name( name: "Pinterest Main", host: "http://pinterest.com/", description: "Pinterest images and videos sharing social service")
+
+  past_days = 1
+  Project.all.each do |project|
+    # Add test data for each project for past 'past_days' days:
+    (60*24*past_days).times { |i|
+      delay = (1..5).to_a.sample.to_f/10
+      response_time = (6..10).to_a.sample.to_f/10
+      report = project.reports.create(
+        code: 200,
+        delay: delay,
+        response_time: response_time,
+        message: "OK"
+      )
+
+      # Set correct time for each report:
+      report.update_attribute(:created_at, Time.now - i*60)
+    } if project.reports.count < (60*24*past_days)
+
+    # Set 500 code for some reports:
+    amount = (project.reports.count.to_f/100)*(1..5).to_a.sample
+    #project.reports.order("RANDOM()").limit(amount).find_in_batches(batch_size: 100) do |group|
+    project.reports.order("RANDOM()").limit(amount).each do |report|
+      report.update_attributes(code: 500, delay: 0.123, response_time: 0.156, message: 'Internal Server Error')
+    end
+
+    # Set Timeout::Error for some reports:
+    amount = (project.reports.count.to_f/100)*(1..5).to_a.sample
+    #project.reports.order("RANDOM()").limit(amount).find_in_batches(batch_size: 100) do |group|
+    project.reports.order("RANDOM()").limit(amount).each do |report|
+      report.update_attributes(code: 0, delay: 0, response_time: 0, message: 'Timeout::Error')
+    end
+  end
+
+  # It doesn't give any profit:
+  #Benchmark.bm { |b| b.report("with") { Thread.new { 50.times { Project.first.reports.create(code: 200, delay: 1, response_time: 1, message: "OK") } }.join; Thread.new { 50.times { Project.first.reports.create(code: 200, delay: 1, response_time: 1, message: "OK") } }.join } }
 end
