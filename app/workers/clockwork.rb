@@ -1,7 +1,9 @@
+require 'sidekiq'
 require "clockwork"
 
 class PingsWorker
   include Sidekiq::Worker
+
   def perform
     threads = []
     Project.all.each do |project|
@@ -14,7 +16,7 @@ class PingsWorker
 end
 
 module Clockwork
-  every 1.monute do
+  every 1.minute, "minute.job" do
     PingsWorker.perform_async
   end
 end

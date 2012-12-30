@@ -22,3 +22,4 @@ capybara-*.html
 /public/assets/*
 /coverage/
 /spec/tmp/*
+*.rdp
