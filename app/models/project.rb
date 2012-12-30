@@ -32,7 +32,7 @@ class Project < ActiveRecord::Base
         response_time = Time.now - start_time
       }
 
-      return {:response_time => response_time, :delay_time => delay_time, :code => response.code, :message => response.message}
+      return {:response_time => response_time, :delay_time => delay_time, :code => response.code.to_i, :message => response.message}
     rescue Exception => err
       Rails.logger.info "[PING FAILED] Host: #{host}. Time: #{Time.now}. Message: #{err.message}."
       return {:response_time => 0, :delay_time => 0, :code => 0, :message => err.message}

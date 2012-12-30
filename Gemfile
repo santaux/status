@@ -13,6 +13,7 @@ group :test do
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'faker', :git => 'git://github.com/stympy/faker.git'
+  gem 'webmock'
 end
 
 # Bundle edge Rails instead:

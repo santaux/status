@@ -199,5 +199,74 @@ describe Project do
       end
     end
   end
+
+  context "ping method" do
+    before(:each) do
+      WebMock.disable_net_connect!
+      project.update_attribute(:host, "http://www.google.com")
+    end
+
+    describe "on success" do
+      before(:each) do
+        stub_request(:get, "http://www.google.com").to_return(:body => "I'm google", :status => [200, "OK"], :headers => { 'Content-Length' => 3000 })
+      end
+
+      it "should return successed status" do
+        project.ping[:code].should == 200
+      end
+
+      it "should have response and deplay time" do
+        ping = project.ping
+        ping[:delay_time].should_not be_zero
+        ping[:response_time].should_not be_zero
+      end
+
+      it "should have response time greater that delay time" do
+        ping = project.ping
+        ping[:delay_time].should < ping[:response_time]
+      end
+    end
+
+    describe "on server error" do
+      before(:each) do
+        stub_request(:get, "http://www.google.com").to_return(:status => [500, "Internal Server Error"])
+      end
+
+      it "should return zero status" do
+        project.ping[:code].should == 500
+      end
+
+      it "should return error message" do
+        project.ping[:message].should == "Internal Server Error"
+      end
+
+      it "should not have zero response and deplay time" do
+        ping = project.ping
+        puts ping.inspect
+        ping[:delay_time].should_not be_zero
+        ping[:response_time].should_not be_zero
+      end
+    end
+
+    describe "on timeout" do
+      before(:each) do
+        stub_request(:get, "http://www.google.com").to_timeout
+      end
+
+      it "should return zero status" do
+        project.ping[:code].should == 0
+      end
+
+      it "should return timeout message" do
+        project.ping[:message].should == "execution expired"
+      end
+
+      it "should have zero response and deplay time" do
+        ping = project.ping
+        ping[:delay_time].should be_zero
+        ping[:response_time].should be_zero
+      end
+    end
+  end
 end
 
