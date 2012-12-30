@@ -6,57 +6,19 @@
     %h4 Uptime
     %h2 #{@project.uptime(params[:period] || "day").to_s[0..5]}%
   .span5
-    #uptime
+    #uptime{:'data-points' => @project.reports_grouped_uptime(params[:period] || "day")}
 .row
   .span2
     %h4 Delay Time
     %h2 #{@project.average_delay_time(params[:period] || "day").to_s[0..5]}ms
   .span5
-    #delay_time
+    #delay_time{:'data-points' => @project.reports_grouped_delay_time(params[:period] || "day")}
 .row
   .span2
     %h4 Response Time
     %h2 #{@project.average_response_time(params[:period] || "day").to_s[0..5]}ms
   .span5
-    #response_time
-
-:javascript
-  $(function () {
-    var d = #{ @project.reports_grouped_uptime(params[:period] || "day") } ;
-
-    $.plot($("#uptime"), [d], {
-      xaxis: {
-        mode: "time", tickSize: [2, 'hour'] 
-      },
-      yaxis: {
-        max: 100
-      }
-    });
-  });
-
-
-:javascript
-  $(function () {
-    var d = #{ @project.reports_grouped_delay_time(params[:period] || "day") } ;
-
-    $.plot($("#delay_time"), [d], {
-      xaxis: {
-        mode: "time", timezone: "browser"
-      }
-    });
-  });
-
-:javascript
-  $(function () {
-    var d = #{ @project.reports_grouped_response_time(params[:period] || "day") } ;
-
-    $.plot($("#response_time"), [d], {
-      xaxis: {
-        mode: "time", timezone: "browser"
-      }
-    });
-  });
-
+    #response_time{:'data-points' => @project.reports_grouped_response_time(params[:period] || "day")}
 
 %br
 %br

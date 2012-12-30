@@ -14,6 +14,8 @@ group :test do
   gem 'factory_girl_rails'
   gem 'faker', :git => 'git://github.com/stympy/faker.git'
   gem 'webmock'
+  gem 'capybara'
+  gem 'database_cleaner'
 end
 
 # Bundle edge Rails instead:

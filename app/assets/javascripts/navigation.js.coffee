@@ -7,7 +7,10 @@ window.upload_data = (pointer, container_selector, li_selector) ->
   $.get($(pointer).attr('href'), (data) ->
     container.html(data)
     container.animate({opacity: 1})
+    # Redraw graphs:
+    window.graphsDraw()
   )
+
 
   return false
 
