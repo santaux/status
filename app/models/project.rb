@@ -9,17 +9,11 @@ class Project < ActiveRecord::Base
 
   PERIODS = %w[day week month year]
 
-  def ping#(host)
+  def ping
     require 'net/http'
     require 'uri'
 
     begin
-      # TODO: read_timeout
-      # NOT SURE: message (OK, etc.)
-      # TODO: EM::Aynchrony / Threads
-      # TODO: Check indexes!
-      # TODO: Do something for navigation opening into new tabs!
-
       delay_time = nil
       response_time = nil
       response = nil
@@ -52,7 +46,6 @@ class Project < ActiveRecord::Base
   end
 
   def reports_grouped_response_time(period="day")
-    #reports.by_period(period).order("created_at DESC").map { |report| [report.created_at.to_i*1000,report.response_time.to_f]}.to_s
     gr = reports.by_period(period).order("created_at DESC").map{ |r|
       [r.response_time, r.created_at] }.group_by { |r| r[1].send(choose_group_time(period))
     }
@@ -68,7 +61,6 @@ class Project < ActiveRecord::Base
   end
 
   def reports_grouped_delay_time(period="day")
-    #reports.by_period(period).order("created_at DESC").map { |report| [report.created_at.to_i*1000,report.delay_time.to_f]}.to_s
     gr = reports.by_period(period).order("created_at DESC").map{ |r|
       [r.delay_time, r.created_at] }.group_by { |r| r[1].send(choose_group_time(period))
     }

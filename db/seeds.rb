@@ -73,7 +73,4 @@ if Rails.env.development?
       report.update_attributes(code: 0, delay_time: 0, response_time: 0, message: 'Timeout::Error')
     end
   end
-
-  # It doesn't give any profit:
-  #Benchmark.bm { |b| b.report("with") { Thread.new { 50.times { Project.first.reports.create(code: 200, delay_time: 1, response_time: 1, message: "OK") } }.join; Thread.new { 50.times { Project.first.reports.create(code: 200, delay_time: 1, response_time: 1, message: "OK") } }.join } }
 end
