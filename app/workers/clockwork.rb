@@ -5,13 +5,19 @@ class PingsWorker
   include Sidekiq::Worker
 
   def perform
-    threads = []
+    # Some problems occurs with sqlite3 and reports creating into threads:
+
+    #threads = []
+    #Project.all.each do |project|
+    #  threads << Thread.new(project) do |p|
+    #    p.reports.create(p.ping)
+    #  end
+    #end
+    #threads.each {|t| t.join }
+
     Project.all.each do |project|
-      threads << Thread.new(project) do |p|
-        p.reports.create(p.ping)
-      end
+      project.reports.create(project.ping)
     end
-    threads.each {|t| t.join }
   end
 end
 
