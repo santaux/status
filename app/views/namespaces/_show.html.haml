@@ -1,6 +1,17 @@
 #namespace_container
   .lead
     = @namespace.description
+  .row
+    .span3
+      %h4 Average Uptime
+      %h2 #{@namespace.uptime(params[:period] || "day").to_s[0..5]}%
+    .span3
+      %h4 Average Delay Time
+      %h2 #{@namespace.average_delay_time(params[:period] || "day").to_s[0..5]}ms
+    .span3
+      %h4 Average Response Time
+      %h2 #{@namespace.average_response_time(params[:period] || "day").to_s[0..5]}ms
+  %br
 
   = render :partial => 'shared/middle_bar', :locals => {:active => @project, :namespace => @namespace}
 
