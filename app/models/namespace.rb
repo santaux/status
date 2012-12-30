@@ -6,14 +6,20 @@ class Namespace < ActiveRecord::Base
   attr_accessible :name, :description
 
   def uptime(period="day")
-    projects.inject(0.0) { |sum,i| sum + i.uptime(period) }/projects.count
+    Rails.cache.fetch("namespace_#{id}_uptime_#{period}") do
+      projects.inject(0.0) { |sum,i| sum + i.uptime(period) }/projects.count
+    end
   end
 
   def average_delay_time(period="day")
-    projects.inject(0.0) { |sum,i| sum + i.average_delay_time(period) }/projects.count
+    Rails.cache.fetch("namespace_#{id}_average_delay_time_#{period}") do
+      projects.inject(0.0) { |sum,i| sum + i.average_delay_time(period) }/projects.count
+    end
   end
 
   def average_response_time(period="day")
-    projects.inject(0.0) { |sum,i| sum + i.average_response_time(period) }/projects.count
+    Rails.cache.fetch("namespace_#{id}_average_response_time_#{period}") do
+      projects.inject(0.0) { |sum,i| sum + i.average_response_time(period) }/projects.count
+    end
   end
 end
