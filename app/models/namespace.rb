@@ -1,7 +1,7 @@
 class Namespace < ActiveRecord::Base
   has_many :projects, :dependent => :destroy
 
-  validate :name, :presence => true
+  validates :name, :presence => true, :uniqueness => true
 
   attr_accessible :name, :description
 end

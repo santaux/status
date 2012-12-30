@@ -7,7 +7,13 @@ gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootst
 gem "haml-rails"
 gem 'therubyracer'
 gem "less-rails"
-gem "rspec-rails"
+
+group :test do
+  gem "rspec-rails"
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+  gem 'faker', :git => 'git://github.com/stympy/faker.git'
+end
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

@@ -7,6 +7,13 @@ GIT
       execjs
       railties (>= 3.1)
 
+GIT
+  remote: git://github.com/stympy/faker.git
+  revision: 6688938eceae2f94d0b7b07c6717ae86a954c942
+  specs:
+    faker (1.1.2)
+      i18n (~> 0.5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -58,6 +65,11 @@ GEM
     execjs (1.4.0)
       multi_json (~> 1.0)
     facter (1.6.17)
+    factory_girl (4.1.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.1.0)
+      factory_girl (~> 4.1.0)
+      railties (>= 3.0.0)
     haml (3.1.7)
     haml-rails (0.3.5)
       actionpack (>= 3.1, < 4.1)
@@ -159,6 +171,9 @@ PLATFORMS
 DEPENDENCIES
   clockwork
   coffee-rails (~> 3.2.1)
+  factory_girl
+  factory_girl_rails
+  faker!
   haml-rails
   jquery-rails
   less-rails

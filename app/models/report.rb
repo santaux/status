@@ -1,7 +1,7 @@
 class Report < ActiveRecord::Base
   belongs_to :project
 
-  validate :project_id, :code, :delay_time, :response_time, :message, :presence => true
+  validates :project_id, :code, :delay_time, :response_time, :message, :presence => true
 
   attr_accessible :code, :delay_time, :response_time, :message
 
