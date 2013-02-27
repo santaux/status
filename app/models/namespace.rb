@@ -10,10 +10,10 @@ class Namespace < ActiveRecord::Base
   end
 
   def average_delay_time(period="day")
-    projects.inject(0.0) { |sum,i| sum + i.average_delay_time(period) }/projects.count
+    projects.inject(0.0) { |sum,i| sum + i.average_delay_time(period).to_f }/projects.count
   end
 
   def average_response_time(period="day")
-    projects.inject(0.0) { |sum,i| sum + i.average_response_time(period) }/projects.count
+    projects.inject(0.0) { |sum,i| sum + i.average_response_time(period).to_f }/projects.count
   end
 end
