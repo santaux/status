@@ -26,10 +26,6 @@ describe Project do
     end
 
     it "should have 5 reports" do
-      #5.times do |i|
-      #  FactoryGirl.create(:report, :project => project)
-      #end
-
       project.reports.count.should be_equal(5)
     end
   end
