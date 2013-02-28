@@ -23,3 +23,6 @@ capybara-*.html
 /coverage/
 /spec/tmp/*
 *.rdp
+/config/database.yml
+.idea
+/manifests

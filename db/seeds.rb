@@ -42,7 +42,7 @@ if Rails.env.development?
   pinterest = Namespace.find_by_name("pinterest")
   pinterest.projects.find_or_create_by_name( name: "Pinterest Main", host: "http://pinterest.com/", description: "Pinterest images and videos sharing social service")
 
-  past_days = 1
+  past_days = ENV['PAST_DAYS'] || 1
   Project.all.each do |project|
     delay_rand_base = rand(2..5)
     response_rand_base = rand(4..8)
