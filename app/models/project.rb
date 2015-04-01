@@ -62,7 +62,7 @@ class Project < ActiveRecord::Base
           # get first time value to build graphs by time:
           v[0][1].to_i*1000,
           # get average response time value:
-          average
+          average.to_f
         ]
       }.sort
     end
@@ -79,7 +79,7 @@ class Project < ActiveRecord::Base
           # get first time value to build graphs by time:
           v[0][1].to_i*1000,
           # get average delay time value:
-          average
+          average.to_f
         ]
       }.sort
     end

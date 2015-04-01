@@ -1,12 +1,14 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'rails', '3.2.9'
 gem 'clockwork'
 gem 'sidekiq'
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem "haml-rails"
-gem 'therubyracer'
+gem 'therubyracer', '0.12.1', platforms: :ruby
 gem "less-rails"
+#gem "passiverecord", :git => 'git@github.com:santaux/passiverecord.git'
+#gem 'colonel', :git => 'git@github.com:santaux/colonel.git'
 
 group :test do
   gem "rspec-rails"
